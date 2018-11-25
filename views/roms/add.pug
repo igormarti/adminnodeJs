@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+        div.container
+            .col-12
+                .tile
+                    form(action="/romscreate", method="post",enctype="multipart/form-data").offset-4
+                        .form-group
+                            label(for="name") Nome
+                            input.form-control.col-6(type="text", name="name")
+                        .form-group
+                            label(for="name") Arquivo
+                            input.form-control.col-6(type="file", name="rom")    
+                        .form-group
+                            label(for="gender") Gênero
+                            select.form-control.col-6(name="gender")
+                                option(value="0") 
+                                each g in genders
+                                    option(value=`${g.id}`) #{g.name}
+                        .form-group
+                            label(for="console") Console
+                            select.form-control.col-6(name="console")
+                                option(value="0")
+                                each c in consolers
+                                    option(value=`${c.id}`) #{c.name}         
+                        .form-group
+                            button.btn.btn-primary.offset-2(type="submit") Enviar    

@@ -3,6 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const passport = require('passport')
+const session = require('express-session')
+var MemoryStore = require('memorystore')(session)
 
 var app = express();
 
@@ -15,6 +18,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    store: new MemoryStore({
+      checkPeriod: 86400000,
+      ttl: 60000*60
+    }),
+    secret:'paytwo2019',
+    resave:false,
+    saveUninitialized:false
+}))
+require('./auth')(passport)
+app.use(passport.initialize())
+app.use(passport.session())
 
 //root router
 app.use('/', require('./app/router'));

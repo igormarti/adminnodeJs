@@ -1,0 +1,31 @@
+extends ../layout
+
+block content
+    .bg.light
+        a(href='/romsadd')
+            input(type="button", value="Novo").btn.btn-success().btn-lg.offset-5
+            <br><br>
+                .row
+                    .col-md-12
+                        .tile
+                            .tile-body
+                                div.container
+                                table.table.table-hover.table-bordered#sampleTable
+                                    thead
+                                        tr
+                                            th Nome
+                                            th Gênero
+                                            th Console
+                                            th Opções
+                                    tbody
+                                    each r in roms
+                                        tr
+                                            td #{r.name}
+                                            td #{r.gendername}
+                                            td #{r.consolename}
+                                            td
+                                                a(href="/roms/edit").offset-2
+                                                    button.btn.btn-primary() Editar
+                                                a(href="/roms/delete").offset-2
+                                                    button.btn.btn-danger() Excluir
+            

@@ -5,6 +5,8 @@ block content
         .col-12.offset-3
             h1.display-4.offset-2 Login
             <br>
+            if message
+                label(for="message") #{message}
             form(method='POST' action='/login')
             
                 div.form-group
