@@ -24,8 +24,8 @@ block content
                                             td #{r.gendername}
                                             td #{r.consolename}
                                             td
-                                                a(href="/roms/edit").offset-2
+                                                a(href=`/romsedit/${r.id}`).offset-2
                                                     button.btn.btn-primary() Editar
-                                                a(href="/roms/delete").offset-2
+                                                a(href=`/romsdel/${r.id}`).offset-2
                                                     button.btn.btn-danger() Excluir
             

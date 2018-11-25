@@ -8,11 +8,11 @@ exports.list = function(cb){
     });
 }
 
-exports.save = function(req,res){
+exports.save = function(req,cb){
     c = conn.conn()
     post = {
         name: req.body.name,
-        path: 'roms/'+req.file.originalname,
+        path: req.file.originalname,
         console_id:parseInt(req.body.console),
         gender_id:parseInt(req.body.gender)
     }
@@ -22,8 +22,48 @@ exports.save = function(req,res){
             if(err != (undefined || '' || null)){
               console.log('Erro ao tentar gravar.'+err)
             }
+            cb(true)
         })
          
         c.end()
     })
-}
+
+}  
+
+  exports.update = function(req,cb){
+        console.log(req.body)
+        c = conn.conn()
+        post = [
+            req.body.name,
+            parseInt(req.body.console),
+            parseInt(req.body.gender),
+            req.body.id
+        ]
+        c.connect(function(err){
+            if (err) console.log(err)
+            c.query("UPDATE roms SET name=?,console_id=?,gender_id=? WHERE id = ?",post,function(err,res){
+                if(err != (undefined || '' || null)){
+                    console.log('Erro ao tentar gravar.'+err)
+                }else{
+                    cb(true)
+                }
+            })
+            
+            c.end()
+        })
+  } 
+  
+  exports.getOne = function(req,cb){
+    c = conn.conn()
+    c.query("SELECT * FROM roms WHERE id=?",[req.params.id],function(err, rom){
+        cb(rom[0])
+    });
+  }
+
+
+  exports.remove = function(req,cb){
+    c = conn.conn()
+    c.query("DELETE FROM roms WHERE id=?",[req.params.id],function(err, rom){
+        cb(true)
+    });
+  }

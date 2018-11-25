@@ -38,5 +38,8 @@ router.get('/',midd.authMiddleware,function(req, res, next) {
 router.get('/roms',midd.authMiddleware,function(req,res,next){roms.index(req,res,next)})
 router.get('/romsadd',midd.authMiddleware,function(req,res,next){roms.add(req,res,next)})
 router.post('/romscreate',midd.authMiddleware,upload.single('rom'),function(req,res,next){roms.create(req,res,next)})
+router.get('/romsedit/:id',midd.authMiddleware,function(req,res,next){roms.edit(req,res,next)})
+router.post('/romsupdate',midd.authMiddleware,function(req,res,next){roms.update(req,res,next)})
+router.get('/romsdel/:id',midd.authMiddleware,function(req,res,next){roms.delete(req,res,next)})
 
 module.exports = router;
