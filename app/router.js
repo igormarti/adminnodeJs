@@ -27,7 +27,7 @@ const storage = multer.diskStorage(
         }
     
 )
-const upload = multer({storage})
+const upload = multer({storage,limits:{fileSize:Infinity}})
 
 
 //Routers to controller of the auth
