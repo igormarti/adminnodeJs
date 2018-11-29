@@ -67,9 +67,36 @@ exports.edit = function(req,res,next){
 }
 
 exports.update = function(req,res,next){
+    req.assert('name','O campo nome é obrigatório.').notEmpty()
+    req.assert('gender','O campo gênero é obrigatório.').isSelected(req.body.gender)
+    req.assert('console','O campo console é obrigatório.').isSelected(req.body.console)
+   
+    var erros = req.validationErrors();
+
+    if(erros){
+        res.format({
+            html: function(){
+                gender.list((g)=>{
+                 conso.list((c)=>{ 
+                res.status(400).render('roms/edit', {errors: erros, 'name':(!name[1])?name[0]:name[0]+' '+name[1],'genders':g,'consolers':c});
+                 })
+                })        
+            },
+            json: function(){
+                res.status(400).json(erros);
+            }
+        });
+        
+        return;
+    }
+
     rom.update(req,(r)=>{
         if(r){
-            res.redirect('/roms')
+            gender.list((g)=>{
+                conso.list((c)=>{ 
+               res.render('roms/edit', {errors: erros, 'name':(!name[1])?name[0]:name[0]+' '+name[1],'genders':g,'consolers':c});
+                })
+               })     
         }
     })
     
