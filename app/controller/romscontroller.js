@@ -80,7 +80,9 @@ exports.update = function(req,res,next){
             html: function(){
                 gender.list((g)=>{
                  conso.list((c)=>{ 
-                res.status(400).render('roms/edit', {errors: erros, 'name':(!name[1])?name[0]:name[0]+' '+name[1],'genders':g,'consolers':c});
+                res.status(400).render('roms/edit', {errors: erros, 'name':(!name[1])?name[0]:name[0]+' '+name[1],
+                r:{'name':req.body.name,'id':req.body.id,'gender_id':req.body.gender,'console_id':req.body.console}
+                ,'genders':g,'consolers':c});
                  })
                 })        
             },
@@ -95,10 +97,12 @@ exports.update = function(req,res,next){
     rom.update(req,(r)=>{
         if(r){
             gender.list((g)=>{
-                conso.list((c)=>{ 
-               res.render('roms/edit', {errors: erros, 'name':(!name[1])?name[0]:name[0]+' '+name[1],'genders':g,'consolers':c});
+               conso.list((c)=>{ 
+               res.render('roms/edit', {success:'Atualizado com sucesso.', 'name':(!name[1])?name[0]:name[0]+' '+name[1],
+               r:{'name':req.body.name,'id':req.body.id,'gender_id':req.body.gender,'console_id':req.body.console}
+               ,'genders':g,'consolers':c});
                 })
-               })     
+            })     
         }
     })
     

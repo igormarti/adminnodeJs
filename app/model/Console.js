@@ -48,8 +48,10 @@ var conn = require('../config/database')
     } 
       
     exports.getOne = function(req,cb){
+        console.log('id:'+req.params.id)
         c = conn.conn()
         c.query("SELECT * FROM console WHERE id=?",[req.params.id],function(err, rom){
+            console.log(rom)
             cb(rom[0])
         });
     }

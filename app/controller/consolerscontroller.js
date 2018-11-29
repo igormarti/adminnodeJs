@@ -68,7 +68,7 @@ exports.update = function(req,res,next){
 
     cons.update(req,(r)=>{
         if(r){
-            res.render('consolers/edit', {success:'Salvo com sucesso.', 'name':(!name[1])?name[0]:name[0]+' '+name[1],'consolers':req.body})
+            res.render('consolers/edit', {success:'Atualizado com sucesso.', 'name':(!name[1])?name[0]:name[0]+' '+name[1],'consolers':req.body})
         }
     })
     

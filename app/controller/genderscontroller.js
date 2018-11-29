@@ -69,7 +69,7 @@ exports.update = function(req,res,next){
 
     gender.update(req,(r)=>{
         if(r){
-            res.render('genders/edit',{success:'Salvo com sucesso', 'name':(!name[1])?name[0]:name[0]+' '+name[1],'gender':req.body})
+            res.render('genders/edit',{success:'Atualizado com sucesso', 'name':(!name[1])?name[0]:name[0]+' '+name[1],'gender':req.body})
         }
     })
     
