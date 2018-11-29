@@ -1,16 +1,19 @@
+//Here is load the modules required to manipulate the routers.
 var express = require('express');
 var passport = require('passport')
 var router = express.Router();
 var path = require('path')
-
+/*Requiring the modules of controller and the middleware
+to protect the private routers*/
 var midd = require('./config/authenticationMiddleware')
 var auth = require('./controller/authcontroller')
 var roms = require('./controller/romscontroller')
 var genders = require('./controller/genderscontroller')
 var consolers = require('./controller/consolerscontroller')
 var users = require('./controller/userscontroller')
-
+//requiring module to upload of file.
 const multer = require('multer')
+//Setting the mode to store the file
 const storage = multer.diskStorage(
     
        {
@@ -27,6 +30,7 @@ const storage = multer.diskStorage(
         }
     
 )
+//Setting the mode of how will storage the file
 const upload = multer({storage,limits:{fileSize:Infinity}})
 
 
@@ -74,7 +78,7 @@ router.get('/usersedit/:id',midd.authMiddleware,function(req,res,next){users.edi
 router.post('/usersupdate',midd.authMiddleware,function(req,res,next){users.update(req,res,next)})
 router.get('/usersdel/:id',midd.authMiddleware,function(req,res,next){users.delete(req,res,next)})
 
-// Check File Type
+//Check File Type
 function checkFileType(file, cb) {
     // Allowed ext
     const filetypes = /zip/;
