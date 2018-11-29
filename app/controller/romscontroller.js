@@ -1,6 +1,8 @@
 var rom = require('../model/Rom')
 var conso = require('../model/Console')
 var gender = require('../model/Gender')
+const multer = require('multer')
+
 
 exports.index = function(req,res,next){
     rom.list((r)=>{
@@ -18,10 +20,39 @@ exports.add = function(req,res,next){
 }
 
 exports.create = function(req,res,next){
+
+    req.assert('name','O campo nome é obrigatório.').notEmpty()
+    req.assert('rom','É obrigatório fazer opload de um arquivo zip.').isZIP(req.file)
+    req.assert('gender','O campo gênero é obrigatório.').isSelected(req.body.gender)
+    req.assert('console','O campo console é obrigatório.').isSelected(req.body.console)
+   
+    var erros = req.validationErrors();
+
+    if(erros){
+        res.format({
+            html: function(){
+                gender.list((g)=>{
+                 conso.list((c)=>{ 
+                res.status(400).render('roms/add', {errors: erros, 'name':name[0]+' '+name[1],'genders':g,'consolers':c});
+                 })
+                })        
+            },
+            json: function(){
+                res.status(400).json(erros);
+            }
+        });
+        
+        return;
+    }
+
+   gender.list((g)=>{
+   conso.list((c)=>{ 
    rom.save(req,(r)=>{
        if(r){
-        res.redirect('/roms')
+         res.render('roms/add',{'success':'Salvo com sucesso.','name':name[0]+' '+name[1],'genders':g,'consolers':c})    
        }
+   })
+   })
    })
 }
 

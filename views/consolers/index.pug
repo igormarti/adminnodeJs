@@ -1,13 +1,13 @@
 extends ../layout
 
 block content
-            
+   
             .bg.light
                 .row
                     .col-md-12
                         .tile
                             .tile-body
-                                a(href='/romsadd')
+                                a(href='/consolersadd')
                                     input(type="button", value="Novo").btn.btn-success().btn-lg.offset-5
                                     <br><br>
                                 div.container
@@ -15,18 +15,14 @@ block content
                                     thead
                                         tr
                                             th Nome
-                                            th Gênero
-                                            th Console
                                             th Opções
                                     tbody
-                                    each r in roms
+                                    each c in consolers
                                         tr
-                                            td #{r.name}
-                                            td #{r.gendername}
-                                            td #{r.consolename}
+                                            td #{c.name}
                                             td
-                                                a(href=`/romsedit/${r.id}`).offset-2
+                                                a(href=`/consolersedit/${c.id}`).offset-2
                                                     button.btn.btn-primary() Editar
-                                                a(href=`/romsdel/${r.id}`).offset-2
+                                                a(href=`/consolersdel/${c.id}`).offset-2
                                                     button.btn.btn-danger() Excluir
             

@@ -6,7 +6,7 @@ block content
             h1.display-4.offset-2 Login
             <br>
             if message
-                label(for="message") #{message}
+                div.alert.alert-danger.col-6 #{message}
             form(method='POST' action='/login')
             
                 div.form-group
@@ -19,6 +19,4 @@ block content
                 
                 button.btn.btn-primary(type='submit').offset-2.btn-lg Entrar 
                 <br><br>        
-                        a(href="http://localhost:3000/register").offset-2 Cadastra-se
-                        <br><br>
-                        a(href="http://localhost:3000/newpassword").offset-2 Esqueci minha senha
+                      

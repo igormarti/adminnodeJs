@@ -6,6 +6,7 @@ var logger = require('morgan');
 const passport = require('passport')
 const session = require('express-session')
 var MemoryStore = require('memorystore')(session)
+var expressValidator = require('express-validator');
 
 var app = express();
 
@@ -13,11 +14,32 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(expressValidator({
+  customValidators: {
+    isZIP: function(value,file) {
+      if(typeof file != "undefined"){
+        var extension = (path.extname(file.filename)).toLowerCase();
+        return extension == '.zip';
+      }else{
+        return false
+      }
+    },
+    isSelected: function(value) {
+      console.log(value)
+      if(parseInt(value) === 0 || isNaN(parseInt(value))){
+          return false
+      }else{
+        return true
+      }
+    }
+  }
+}))
 app.use(session({
     store: new MemoryStore({
       checkPeriod: 86400000,

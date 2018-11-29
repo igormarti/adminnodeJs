@@ -30,8 +30,7 @@ exports.save = function(req,cb){
 
 }  
 
-  exports.update = function(req,cb){
-        console.log(req.body)
+exports.update = function(req,cb){
         c = conn.conn()
         post = [
             req.body.name,
@@ -51,19 +50,19 @@ exports.save = function(req,cb){
             
             c.end()
         })
-  } 
+} 
   
-  exports.getOne = function(req,cb){
+exports.getOne = function(req,cb){
     c = conn.conn()
     c.query("SELECT * FROM roms WHERE id=?",[req.params.id],function(err, rom){
         cb(rom[0])
     });
-  }
+}
 
 
-  exports.remove = function(req,cb){
+exports.remove = function(req,cb){
     c = conn.conn()
     c.query("DELETE FROM roms WHERE id=?",[req.params.id],function(err, rom){
         cb(true)
     });
-  }
+}

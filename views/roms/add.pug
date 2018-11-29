@@ -4,6 +4,11 @@ block content
         div.container
             .col-12
                 .tile
+                    if success
+                        div.alert.alert-success #{success}
+                    if errors
+                        each e in errors
+                            div.alert.alert-danger #{e.msg}
                     form(action="/romscreate", method="post",enctype="multipart/form-data").offset-4
                         .form-group
                             label(for="name") Nome

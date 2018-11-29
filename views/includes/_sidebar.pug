@@ -9,15 +9,19 @@ aside.app-sidebar
 
 	ul.app-menu
 		li
+			a.app-menu__item(href='/users' class={'active': activePage == 'dashboard'})
+				i.app-menu__icon.fa.fa-dashboard
+				span.app-menu__label Usuários
+		li
 			a.app-menu__item(href='/roms' class={'active': activePage == 'dashboard'})
 				i.app-menu__icon.fa.fa-dashboard
 				span.app-menu__label Roms
 		li
-			a.app-menu__item(href='/roms' class={'active': activePage == 'dashboard'})
+			a.app-menu__item(href='/genders' class={'active': activePage == 'dashboard'})
 				i.app-menu__icon.fa.fa-dashboard
-				span.app-menu__label Gênero
+				span.app-menu__label Gêneros
 		li
-			a.app-menu__item(href='/roms' class={'active': activePage == 'dashboard'})
+			a.app-menu__item(href='/consolers' class={'active': activePage == 'dashboard'})
 				i.app-menu__icon.fa.fa-dashboard
-				span.app-menu__label Console			
+				span.app-menu__label Consoles			
 
