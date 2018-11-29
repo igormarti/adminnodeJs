@@ -2,13 +2,14 @@ var user = require('../model/User')
 
 exports.index = function(req,res,next){
     user.list((u)=>{
-        res.render('users/index',{'name':name[0]+' '+name[1],'users':u})
+        name = req.user.name.split(' ');
+        res.render('users/index',{'name':(!name[1])?name[0]:name[0]+' '+name[1],'users':u})
     })
 }
 
 exports.add = function(req,res,next){
      name = req.user.name.split(' ');
-    res.render('users/add',{'name':name[0]+' '+name[1]})
+    res.render('users/add',{'name':(!name[1])?name[0]:name[0]+' '+name[1]})
 }
 
 exports.create = function(req,res,next){
@@ -23,7 +24,7 @@ exports.create = function(req,res,next){
     if(erros){
            res.format({
                html: function(){
-                   res.status(400).render('users/add', {errors: erros, 'name':name[0]+' '+name[1]});        
+                   res.status(400).render('users/add', {errors: erros, 'name':(!name[1])?name[0]:name[0]+' '+name[1]});        
                },
                json: function(){
                    res.status(400).json(erros);
@@ -35,14 +36,14 @@ exports.create = function(req,res,next){
 
    user.save(req,(r)=>{
        if(r){
-        res.render('users/add',{success:'Salvo com sucesso.', 'name':name[0]+' '+name[1]})
+        res.render('users/add',{success:'Salvo com sucesso.', 'name':(!name[1])?name[0]:name[0]+' '+name[1]})
        }
    })
 }
 
 exports.edit = function(req,res,next){
     user.getOne(req,(u)=>{
-        res.render('users/edit',{'name':name[0]+' '+name[1],'user':u})
+        res.render('users/edit',{'name':(!name[1])?name[0]:name[0]+' '+name[1],'user':u})
     })
 }
 
@@ -59,7 +60,7 @@ exports.update = function(req,res,next){
        if(erros){
            res.format({
                html: function(){
-                   res.status(400).render('users/edit', {errors: erros, 'name':name[0]+' '+name[1]});        
+                   res.status(400).render('users/edit', {errors: erros, 'name':(!name[1])?name[0]:name[0]+' '+name[1]});        
                },
                json: function(){
                    res.status(400).json(erros);
@@ -71,7 +72,7 @@ exports.update = function(req,res,next){
 
     user.update(req,(r)=>{
         if(r){
-            res.render('users/edit',{success:'Atualizado com sucesso.', 'name':name[0]+' '+name[1],'user':req.body})
+            res.render('users/edit',{success:'Atualizado com sucesso.', 'name':(!name[1])?name[0]:name[0]+' '+name[1],'user':req.body})
         }
     })
     

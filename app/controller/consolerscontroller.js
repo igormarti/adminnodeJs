@@ -2,13 +2,13 @@ var cons = require('../model/Console')
 
 exports.index = function(req,res,next){
     cons.list((r)=>{
-        res.render('consolers/index',{'name':name[0]+' '+name[1],'consolers':r})
+        res.render('consolers/index',{'name':(!name[1])?name[0]:name[0]+' '+name[1],'consolers':r})
     })
 }
 
 exports.add = function(req,res,next){
         name = req.user.name.split(' ');
-        res.render('consolers/add',{'name':name[0]+' '+name[1]})
+        res.render('consolers/add',{'name':(!name[1])?name[0]:name[0]+' '+name[1]})
 }
 
 exports.create = function(req,res,next){
@@ -20,7 +20,7 @@ exports.create = function(req,res,next){
     if(erros){
            res.format({
                html: function(){
-                   res.status(400).render('consolers/add', {errors: erros, 'name':name[0]+' '+name[1]});        
+                   res.status(400).render('consolers/add', {errors: erros, 'name':(!name[1])?name[0]:name[0]+' '+name[1]});        
                },
                json: function(){
                    res.status(400).json(erros);
@@ -32,7 +32,7 @@ exports.create = function(req,res,next){
     
    cons.save(req,(r)=>{
        if(r){
-        res.render('consolers/add', {success:'Salvo com sucesso.', 'name':name[0]+' '+name[1]});
+        res.render('consolers/add', {success:'Salvo com sucesso.', 'name':(!name[1])?name[0]:name[0]+' '+name[1]});
        }
    })
 }
@@ -40,7 +40,7 @@ exports.create = function(req,res,next){
 exports.edit = function(req,res,next){
  
     cons.getOne(req,(c)=>{
-        res.render('consolers/edit',{'name':name[0]+' '+name[1],'consolers':c})
+        res.render('consolers/edit',{'name':(!name[1])?name[0]:name[0]+' '+name[1],'consolers':c})
     })
 
 }
@@ -54,7 +54,7 @@ exports.update = function(req,res,next){
        if(erros){
            res.format({
                html: function(){
-                   res.status(400).render('consolers/edit', {errors: erros, 'name':name[0]+' '+name[1],'consolers':req.body});        
+                   res.status(400).render('consolers/edit', {errors: erros, 'name':(!name[1])?name[0]:name[0]+' '+name[1],'consolers':req.body});        
                },
                json: function(){
                    res.status(400).json(erros);
@@ -66,7 +66,7 @@ exports.update = function(req,res,next){
 
     cons.update(req,(r)=>{
         if(r){
-            res.render('consolers/edit', {success:'Salvo com sucesso.', 'name':name[0]+' '+name[1],'consolers':req.body})
+            res.render('consolers/edit', {success:'Salvo com sucesso.', 'name':(!name[1])?name[0]:name[0]+' '+name[1],'consolers':req.body})
         }
     })
     

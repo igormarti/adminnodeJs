@@ -2,13 +2,13 @@ var gender = require('../model/Gender')
 
 exports.index = function(req,res,next){
     gender.list((r)=>{
-        res.render('genders/index',{'name':name[0]+' '+name[1],'gender':r})
+        res.render('genders/index',{'name':(!name[1])?name[0]:name[0]+' '+name[1],'gender':r})
     })
 }
 
 exports.add = function(req,res,next){
         name = req.user.name.split(' ');
-        res.render('genders/add',{'name':name[0]+' '+name[1]})
+        res.render('genders/add',{'name':(!name[1])?name[0]:name[0]+' '+name[1]})
 }
 
 exports.create = function(req,res,next){
@@ -19,7 +19,7 @@ exports.create = function(req,res,next){
     if(erros){
            res.format({
                html: function(){
-                   res.status(400).render('genders/add', {errors: erros, 'name':name[0]+' '+name[1]});        
+                   res.status(400).render('genders/add', {errors: erros, 'name':(!name[1])?name[0]:name[0]+' '+name[1]});        
                },
                json: function(){
                    res.status(400).json(erros);
@@ -31,7 +31,7 @@ exports.create = function(req,res,next){
 
    gender.save(req,(r)=>{
        if(r){
-        res.render('genders/add', {success:'Salvo com sucesso.', 'name':name[0]+' '+name[1]});
+        res.render('genders/add', {success:'Salvo com sucesso.', 'name':(!name[1])?name[0]:name[0]+' '+name[1]});
        }
    })
 }
@@ -39,7 +39,7 @@ exports.create = function(req,res,next){
 exports.edit = function(req,res,next){
  
     gender.getOne(req,(g)=>{
-        res.render('genders/edit',{'name':name[0]+' '+name[1],'gender':g})
+        res.render('genders/edit',{'name':(!name[1])?name[0]:name[0]+' '+name[1],'gender':g})
     })
 
 }
@@ -52,7 +52,7 @@ exports.update = function(req,res,next){
        if(erros){
            res.format({
                html: function(){
-                   res.status(400).render('genders/edit', {errors: erros, 'name':name[0]+' '+name[1],'gender':req.body});        
+                   res.status(400).render('genders/edit', {errors: erros, 'name':(!name[1])?name[0]:name[0]+' '+name[1],'gender':req.body});        
                },
                json: function(){
                    res.status(400).json(erros);
@@ -65,7 +65,7 @@ exports.update = function(req,res,next){
 
     gender.update(req,(r)=>{
         if(r){
-            res.render('genders/edit',{success:'Salvo com sucesso', 'name':name[0]+' '+name[1],'gender':req.body})
+            res.render('genders/edit',{success:'Salvo com sucesso', 'name':(!name[1])?name[0]:name[0]+' '+name[1],'gender':req.body})
         }
     })
     

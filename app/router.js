@@ -39,7 +39,7 @@ router.post('/login',passport.authenticate('local',{successRedirect:'/',failureR
 /* GET home page. */
 router.get('/',midd.authMiddleware,function(req, res, next) { 
     name = req.user.name.split(' ');   
-    res.render('index',{name:name[0]+" "+name[1]})
+    res.render('index',{name:(!name[1])?name[0]:name[0]+' '+name[1]})
 });
 
 //Routers to roms
@@ -69,7 +69,7 @@ router.get('/consolersdel/:id',midd.authMiddleware,function(req,res,next){consol
 //Routers to users
 router.get('/users',midd.authMiddleware,function(req,res,next){users.index(req,res,next)})
 router.get('/usersadd',midd.authMiddleware,function(req,res,next){users.add(req,res,next)})
-router.post('/userscreate',midd.authMiddleware,function(req,res,next){users.create(req,res,next)})
+router.post('/userscreate',function(req,res,next){users.create(req,res,next)})
 router.get('/usersedit/:id',midd.authMiddleware,function(req,res,next){users.edit(req,res,next)})
 router.post('/usersupdate',midd.authMiddleware,function(req,res,next){users.update(req,res,next)})
 router.get('/usersdel/:id',midd.authMiddleware,function(req,res,next){users.delete(req,res,next)})

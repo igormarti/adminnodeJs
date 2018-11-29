@@ -6,7 +6,7 @@ const multer = require('multer')
 
 exports.index = function(req,res,next){
     rom.list((r)=>{
-        res.render('roms/index',{'name':name[0]+' '+name[1],'roms':r})
+        res.render('roms/index',{'name':(!name[1])?name[0]:name[0]+' '+name[1],'roms':r})
     })
 }
 
@@ -14,7 +14,7 @@ exports.add = function(req,res,next){
     gender.list((g)=>{
         conso.list((c)=>{
              name = req.user.name.split(' ');
-             res.render('roms/add',{'name':name[0]+' '+name[1],'genders':g,'consolers':c})
+             res.render('roms/add',{'name':(!name[1])?name[0]:name[0]+' '+name[1],'genders':g,'consolers':c})
         })
     }) 
 }
@@ -22,7 +22,7 @@ exports.add = function(req,res,next){
 exports.create = function(req,res,next){
 
     req.assert('name','O campo nome é obrigatório.').notEmpty()
-    req.assert('rom','É obrigatório fazer opload de um arquivo zip.').isZIP(req.file)
+    req.assert('rom','É obrigatório fazer opload de um arquivo zip ou 7z.').isZIP(req.file)
     req.assert('gender','O campo gênero é obrigatório.').isSelected(req.body.gender)
     req.assert('console','O campo console é obrigatório.').isSelected(req.body.console)
    
@@ -33,7 +33,7 @@ exports.create = function(req,res,next){
             html: function(){
                 gender.list((g)=>{
                  conso.list((c)=>{ 
-                res.status(400).render('roms/add', {errors: erros, 'name':name[0]+' '+name[1],'genders':g,'consolers':c});
+                res.status(400).render('roms/add', {errors: erros, 'name':(!name[1])?name[0]:name[0]+' '+name[1],'genders':g,'consolers':c});
                  })
                 })        
             },
@@ -49,7 +49,7 @@ exports.create = function(req,res,next){
    conso.list((c)=>{ 
    rom.save(req,(r)=>{
        if(r){
-         res.render('roms/add',{'success':'Salvo com sucesso.','name':name[0]+' '+name[1],'genders':g,'consolers':c})    
+         res.render('roms/add',{'success':'Salvo com sucesso.','name':(!name[1])?name[0]:name[0]+' '+name[1],'genders':g,'consolers':c})    
        }
    })
    })
@@ -60,7 +60,7 @@ exports.edit = function(req,res,next){
     gender.list((g)=>{
        conso.list((c)=>{
             rom.getOne(req,(r)=>{
-                res.render('roms/edit',{'name':name[0]+' '+name[1],r,'genders':g,'consolers':c})
+                res.render('roms/edit',{'name':(!name[1])?name[0]:name[0]+' '+name[1],r,'genders':g,'consolers':c})
             })
        }) 
     })

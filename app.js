@@ -25,7 +25,8 @@ app.use(expressValidator({
     isZIP: function(value,file) {
       if(typeof file != "undefined"){
         var extension = (path.extname(file.filename)).toLowerCase();
-        return extension == '.zip';
+        console.log(extension)
+        return (extension == '.zip' || extension == '.7z');
       }else{
         return false
       }
