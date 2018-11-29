@@ -13,6 +13,7 @@ exports.add = function(req,res,next){
 }
 
 exports.create = function(req,res,next){
+    name = req.user.name.split(' ');
     req.assert('name','O campo nome é obrigatório.').notEmpty()
     req.assert('email','O campo email é obrigatório.').notEmpty()
     req.assert('email','Email inválido.').isEmail()
@@ -43,12 +44,13 @@ exports.create = function(req,res,next){
 
 exports.edit = function(req,res,next){
     user.getOne(req,(u)=>{
+        name = req.user.name.split(' ');
         res.render('users/edit',{'name':(!name[1])?name[0]:name[0]+' '+name[1],'user':u})
     })
 }
 
 exports.update = function(req,res,next){
-
+    name = req.user.name.split(' ');
     req.assert('name','O campo nome é obrigatório.').notEmpty()
     req.assert('email','O campo email é obrigatório.').notEmpty()
     req.assert('email','Email inválido.').isEmail()

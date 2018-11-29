@@ -2,6 +2,7 @@ var cons = require('../model/Console')
 
 exports.index = function(req,res,next){
     cons.list((r)=>{
+        name = req.user.name.split(' ');
         res.render('consolers/index',{'name':(!name[1])?name[0]:name[0]+' '+name[1],'consolers':r})
     })
 }
@@ -12,7 +13,7 @@ exports.add = function(req,res,next){
 }
 
 exports.create = function(req,res,next){
-   
+    name = req.user.name.split(' ');
     req.assert('name','O campo nome é obrigatório.').notEmpty()
 
     var erros = req.validationErrors();
@@ -40,13 +41,14 @@ exports.create = function(req,res,next){
 exports.edit = function(req,res,next){
  
     cons.getOne(req,(c)=>{
+        name = req.user.name.split(' ');
         res.render('consolers/edit',{'name':(!name[1])?name[0]:name[0]+' '+name[1],'consolers':c})
     })
 
 }
 
 exports.update = function(req,res,next){
-
+    name = req.user.name.split(' ');
     req.assert('name','O campo nome é obrigatório.').notEmpty()
 
     var erros = req.validationErrors();

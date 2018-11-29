@@ -2,6 +2,7 @@ var gender = require('../model/Gender')
 
 exports.index = function(req,res,next){
     gender.list((r)=>{
+        name = req.user.name.split(' ');
         res.render('genders/index',{'name':(!name[1])?name[0]:name[0]+' '+name[1],'gender':r})
     })
 }
@@ -12,6 +13,7 @@ exports.add = function(req,res,next){
 }
 
 exports.create = function(req,res,next){
+    name = req.user.name.split(' ');
     req.assert('name','O campo nome é obrigatório.').notEmpty()
 
     var erros = req.validationErrors();
@@ -39,12 +41,14 @@ exports.create = function(req,res,next){
 exports.edit = function(req,res,next){
  
     gender.getOne(req,(g)=>{
+        name = req.user.name.split(' ');
         res.render('genders/edit',{'name':(!name[1])?name[0]:name[0]+' '+name[1],'gender':g})
     })
 
 }
 
 exports.update = function(req,res,next){
+    name = req.user.name.split(' ');
     req.assert('name','O campo nome é obrigatório.').notEmpty()
 
     var erros = req.validationErrors();
